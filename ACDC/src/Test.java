@@ -9,6 +9,7 @@ public class Test {
 		{
 			Scanner scanner = new Scanner (new BufferedReader (new FileReader (new File ("C:\\Users\\moi\\Desktop\\cour imt\\acdc\\exemple vcf.vcf"))));
 			Scanner scannerInter = new Scanner (new BufferedReader (new FileReader (new File ("C:\\Users\\moi\\Desktop\\cour imt\\acdc\\exemple-vcf-partinter.vcf"))));
+			Scanner scannerInter2 = new Scanner (new BufferedReader (new FileReader (new File ("C:\\Users\\moi\\Desktop\\cour imt\\acdc\\exemple-vcf-partinter.vcf"))));
 			/* découpe du fichier vcf en 3 fichiers différents 
 			 * 1 fichier contenant les métadonnées commençant par ## (part1)
 			 * 1 fichier contenant les colonnes impaires (part2)
@@ -23,7 +24,9 @@ public class Test {
 			
 			String lector; // récupère la ligne de lecture actuel du fichier VCF
 			String meta;
-			
+			String lectorInter;
+			String lectorInter2;
+			String lectorInterSui;
 			meta="##"; // tous les lignes de métadonnées commence par ##
 			lector=scanner.nextLine(); // premiere ligne du fichier
 			
@@ -59,16 +62,46 @@ public class Test {
 		part1.close();
 		partInter.close();
 		
-		lector=scannerInter.next();
+		lectorInter=scannerInter.next();
+		lectorInterSui=scannerInter.next();
+		lectorInter2=scannerInter2.nextLine();
+		
+		System.out.println(lectorInter);
+		System.out.println(lectorInterSui);
 		while (true){
 			try {
-				part2.print(lector);
-				part2.print(" ");
-				lector=scannerInter.next();
-				part3.print(lector);
-				part3.print(" ");
-				lector=scannerInter.next();
-			}
+				
+				System.out.println(lectorInter2);
+				System.out.println(lectorInter);
+				System.out.println(lectorInterSui);
+				System.out.println(lectorInter2.substring(lectorInter2.lastIndexOf(" ")).length());
+				System.out.println(lectorInter.length());
+				if((lectorInter2.substring(lectorInter2.lastIndexOf(" ")).length()==lectorInter.length()+1)||(lectorInter2.substring(lectorInter2.lastIndexOf(" ")).length()==lectorInterSui.length()+1)) {
+					if (lectorInter.equals(lectorInter2.substring(lectorInter2.lastIndexOf(lectorInter)))||(lectorInterSui.equals(lectorInter2.substring(lectorInter2.lastIndexOf(lectorInterSui))))) {
+						part2.println();
+						part3.println();
+						System.out.println("rhaa");
+						lectorInter2=scannerInter2.nextLine();
+					}
+				}else {
+					part2.print(lectorInter);
+					part2.print(" ");
+					lectorInter=scannerInter.next();
+					
+					if((lectorInter2.substring(lectorInter2.lastIndexOf(" ")).length()==lectorInter.length()+1)||(lectorInter2.substring(lectorInter2.lastIndexOf(" ")).length()==lectorInterSui.length()+1)) {
+						if (lectorInter.equals(lectorInter2.substring(lectorInter2.lastIndexOf(lectorInter)))||(lectorInterSui.equals(lectorInter2.substring(lectorInter2.lastIndexOf(lectorInterSui))))) {
+							part2.println();
+							part3.println();
+							lectorInter2=scannerInter2.nextLine();
+						}}
+					
+					
+					part3.print(lectorInterSui);
+					part3.print(" ");
+					lectorInterSui=scannerInter.next();
+				
+				}
+				}
 			catch(NoSuchElementException exception) {
 				break;
 			}
